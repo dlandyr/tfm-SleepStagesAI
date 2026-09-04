@@ -1,0 +1,92 @@
+# =============================================================================
+# Configuración central del experimento de clasificación de fases del sueño.
+# Todos los parámetros del pipeline se leen desde aquí para garantizar
+# reproducibilidad completa del artículo de referencia.
+# =============================================================================
+
+proyecto:
+  nombre: "Sleep Stage Classification - DREAMT Dataset"
+  version: "1.0"
+  semilla: 42
+
+datos:
+  frecuencia_hz: 64         # Frecuencia de muestreo señal BVP (Hz)
+  epoch_segundos: 30        # Duración de cada ventana de análisis
+  num_pacientes: 100         # Número de participantes (artículo usa 10)
+  etiquetas_validas:        # Etiquetas PSG que se conservan
+    - "W"
+    - "N1"
+    - "N2"
+    - "N3"
+    - "R"
+  etiquetas_excluir:        # Etiquetas PSG que se descartan
+    - "P"
+    - "Missing"
+
+preprocesamiento:
+  savgol_window: 9          # Ventana filtro Savitzky-Golay (muestras)
+  savgol_order: 3           # Orden polinomio Savitzky-Golay
+  min_picos_positivos: 3    # Mínimo picos para procesar una ventana
+  min_picos_negativos: 3
+
+features:
+ {}
+
+modelos:
+  algoritmos:               # Algoritmos a evaluar
+    - "rf"
+    - "knn"
+    - "xgboost"
+    - "svm"
+  random_forest:
+    n_estimators: 200
+    max_depth: 15
+    random_state: 42
+  knn:
+    n_neighbors: 5
+    metric: "euclidean"
+  xgboost:
+    n_estimators: 200
+    max_depth: 8
+    eval_metric: "mlogloss"
+    random_state: 42
+
+evaluacion:
+  test_size: 0.1            # 10% para test
+  val_size: 0.1             # 10% para validación
+  stratify: true            # Split estratificado por clase
+  imputer_strategy: "median"
+  scaler: "standard"
+  metricas:
+    - "accuracy"
+    - "precision"
+    - "sensitivity"
+    - "specificity"
+    - "f1"
+
+experimentos:               # Escenarios de clasificación del artículo
+  - num_clases: 2
+    descripcion: "Wake vs Sleep"
+    mapeo:
+      Wake: ["W"]
+      Sleep: ["N1", "N2", "N3", "R"]
+  - num_clases: 3
+    descripcion: "Wake vs NREM vs REM"
+    mapeo:
+      Wake: ["W"]
+      NREM: ["N1", "N2", "N3"]
+      REM: ["R"]
+  - num_clases: 4
+    descripcion: "Wake vs Light Sleep vs Deep Sleep vs REM"
+    mapeo:
+      Wake: ["W"]
+      Light: ["N1", "N2"]
+      Deep: ["N3"]
+      REM: ["R"]
+
+xai:
+  algoritmo: "xgboost"      # Modelo usado para explicabilidad
+  n_lime_samples: 200       # Instancias del test para LIME global
+  n_lime_features: 15       # Features mostradas en el gráfico LIME global
+  n_shap_features: 15       # Features mostradas en gráfico SHAP global
+  epoch_local: 15           # Epoch específico para LIME local

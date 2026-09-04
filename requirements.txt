@@ -1,0 +1,49 @@
+# =============================================================================
+# DEPENDENCIAS Y LIBRERÍAS DEL PROYECTO (requirements.txt)
+# Instalar en la terminal con: pip install -r requirements.txt
+# =============================================================================
+
+# PROCESAMIENTO GENERAL DE DATOS
+
+numpy>=1.24.0         # Manejo eficiente de arreglos numéricos y cálculos matemáticos
+pandas>=2.0.0         # Gestión de las tablas de datos de los pacientes (archivos maestros)
+scipy>=1.11.0         # Contiene el filtro Savitzky-Golay usado para limpiar las señales
+pyyaml>=6.0           # Permite leer el archivo de configuración global del proyecto
+
+# ANÁLISIS DE SEÑAL FISIOLÓGICA
+
+antropy>=0.1.6        # Calcula la entropía y complejidad de la señal biomédica
+
+# MODELOS DE INTELIGENCIA ARTIFICIAL
+
+scikit-learn>=1.3.0   # Incluye los modelos Random Forest y KNN, y las métricas de evaluación
+xgboost>=2.0.0        # Algoritmos avanzados de árboles de decisión (modelo principal)
+
+# INTELIGENCIA ARTIFICIAL EXPLICABLE (XAI)
+
+lime>=0.2.0.1         # Genera explicaciones visuales ágiles sobre casos locales aproximando el modelo
+shap>=0.51.0          # Atribución matemática exacta (Valores Shapley) para el análisis de importancia global
+
+# GRÁFICOS Y REPORTES VISUALES` 
+
+matplotlib>=3.7.0     # Motor principal para dibujar los hipnogramas y las gráficas globales
+seaborn>=0.12.0       # Estiliza las matrices de confusión y las tablas de rendimiento
+plotly>=5.0.0         # Gráficos interactivos de señal BVP en la interfaz web
+
+# INTERFAZ WEB
+
+streamlit>=1.28.0     # Interfaz web interactiva del sistema
+
+# ALMACENAMIENTO DE MODELOS
+
+joblib>=1.3.0         # Guarda los modelos en el disco duro para no tener que repetir todo el entrenamiento
+
+# ENTORNO DE DESARROLLO
+
+jupyter>=1.0.0        # Permite abrir y trabajar con cuadernos de código paso a paso
+ipykernel>=6.0.0      # Conecta el código de los cuadernos con el motor de Python
+
+# TESTING
+
+pytest>=7.4.0         # Ejecuta pruebas automáticas sobre las funciones del proyecto
+pytest-cov>=4.1.0     # Mide qué porcentaje del código ha sido verificado con éxito
